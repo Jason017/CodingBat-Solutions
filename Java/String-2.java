@@ -269,6 +269,7 @@ public String zipZap(String str)
 }
 
 // Return a version of the given string, where for every star (*) in the string the star and the chars immediately to its left and right are gone. So "ab*cd" yields "ad" and "ab**cd" also yields "ad".
+// First Solustion
 public String starOut(String str)
 {
 	int len = str.length();
@@ -293,7 +294,33 @@ public String starOut(String str)
 	}
 	return stbuild.toString();
 }
-
+// Second Solution
+public String starOut(String str) {
+    int len = str.length();
+    char[] array = str.toCharArray();
+    for (int i = 0; i < len; i++) {
+        if (array[i] == '*' && i != 0 && i != len - 1) {
+            if (array[i - 1] != '*') {
+                array[i - 1] = ' ';
+            }
+            if (array[i + 1] != '*') {
+                array[i + 1] = ' ';
+            }
+            array[i] = ' ';
+        }
+        if (array[i] == '*') {
+            if (i == 0 && len > 1) {
+                array[1] = ' ';
+            }
+            if (i == len - 1 && len > 1) {
+                array[len - 2] = ' ';
+            }
+            array[i] = ' ';
+        }
+    }
+    String nst = String.valueOf(array);
+    return nst.replaceAll(" ", "");
+}
 // Given a string and a non-empty word string, return a version of the original String where all chars have been replaced by pluses ("+"), except for appearances of the word string which are preserved unchanged.
 public String plusOut(String str, String word)
 {
