@@ -244,6 +244,7 @@ public boolean sameStarChar(String str)
 }
 
 // Look for patterns like "zip" and "zap" in the string -- length-3, starting with 'z' and ending with 'p'. Return a string where for all such words, the middle letter is gone, so "zipXzap" yields "zpXzp". 
+//First Solution
 public String zipZap(String str)
 {
 	int len = str.length();
@@ -267,9 +268,32 @@ public String zipZap(String str)
 	}
 	return stbuild.toString();
 }
+//Second Solution
+public String zipZap(String str) {
+    StringBuilder newstr = new StringBuilder(str);
+    for (int i = 0; i < newstr.length() - 2; i++) {
+        if (newstr.charAt(i) == 'z' && newstr.charAt(i + 2) == 'p') {
+            newstr.deleteCharAt(i + 1);
+        }
+    }
+    return newstr.toString();
+}
+// Third Solution
+public String zipZap(String str) {
+    return str.replaceAll("z.p", "zp");
+}
+// Fourth Solution
+public String zipZap(String str) {
+    for (int i = 0; i < str.length() - 2; i++) {
+        if (str.charAt(i) == 'z' && str.charAt(i + 2) == 'p') {
+            str = str.substring(0, i + 1) + str.substring(i + 2);
+        }
+    }
+    return str;
+}
 
 // Return a version of the given string, where for every star (*) in the string the star and the chars immediately to its left and right are gone. So "ab*cd" yields "ad" and "ab**cd" also yields "ad".
-// First Solustion
+// First Solution
 public String starOut(String str)
 {
 	int len = str.length();
@@ -321,7 +345,9 @@ public String starOut(String str) {
     String nst = String.valueOf(array);
     return nst.replaceAll(" ", "");
 }
+
 // Given a string and a non-empty word string, return a version of the original String where all chars have been replaced by pluses ("+"), except for appearances of the word string which are preserved unchanged.
+// First Solution
 public String plusOut(String str, String word)
 {
 	int len = str.length();
@@ -343,6 +369,22 @@ public String plusOut(String str, String word)
 	for(; i < len; i++)
 		stbuild.append('+');
 	return stbuild.toString();
+}
+// Second Solution
+public String plusOut(String str, String word) {
+    int s = str.length();
+    int w = word.length();
+    String newstr = "";
+    for (int i = 0; i < s; i++) {
+        if (i < s - w + 1 && str.substring(i, i + w).equals(word)) {
+            newstr += word;
+            i = i + w - 1;
+        }
+        else {
+            newstr += "+";
+        }
+    }
+    return newstr;
 }
 
 // Given a string and a non-empty word string, return a string made of each char just before and just after every appearance of the word in the string. Ignore cases where there is no char before or after the word, and a char may be included twice if it is between two words. 
